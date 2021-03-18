@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import { React, useState } from 'react'
+
 import './App.css';
+import Mapping from './component/Mapping';
+import UContext from './component/Ucontext';
 
 function App() {
+  const [input, setInput] = useState("")
+  const [Item, setItem] = useState([])
+  const ItemEvent = (event) => {
+    event.preventDefault()
+    setInput(event.target.value);
+
+  }
+  const ListOfItem = () => {
+
+    setItem((oldItem) => {
+      return [...oldItem, input];
+    });
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h3>bookstore</h3>
+      <form>
+
+        <input type="text" value={input} onChange={ItemEvent} />
+        <button onClick={ListOfItem}>+</button>
+        <ol>
+          {Item.map((itemval, index) => {
+            return <li key={index}>   {itemval} </li>;
+          })
+          }
+        </ol>
+
+      </form>
+      <UContext>
+        <Mapping />
+      </UContext>
     </div>
   );
 }
